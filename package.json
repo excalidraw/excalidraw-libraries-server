@@ -2,14 +2,16 @@
   "name": "excalidraw-libraries-automation",
   "version": "1.0.0",
   "description": "Automate process of excalidraw libraries",
-  "main": "index.js",
+  "main": "createPullRequest.js",
   "repository": "git@github.com:excalidraw/excalidraw-libraries-automation.git",
   "license": "MIT",
   "devDependencies": {
     "@excalidraw/eslint-config": "1.0.0",
     "@excalidraw/prettier-config": "1.0.2",
+    "@octokit/core": "^3.5.1",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.3.1",
+    "octokit-plugin-create-pull-request": "^3.9.3",
     "prettier": "^2.3.1"
   },
   "prettier": "@excalidraw/prettier-config",

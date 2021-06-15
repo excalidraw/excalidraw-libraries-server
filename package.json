@@ -1,0 +1,12 @@
+{
+  "name": "excalidraw-libraries-automation",
+  "version": "1.0.0",
+  "description": "Automate process of excalidraw libraries",
+  "main": "index.js",
+  "repository": "git@github.com:excalidraw/excalidraw-libraries-automation.git",
+  "license": "MIT",
+  "devDependencies": {
+    "@octokit/core": "^3.5.1",
+    "octokit-plugin-create-pull-request": "^3.9.3"
+  }
+}

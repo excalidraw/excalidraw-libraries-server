@@ -83,11 +83,8 @@ const createPullRequest = async ({
 };
 
 const getTodayDate = () => {
-  const dateObj = new Date();
-  const month = dateObj.getUTCMonth() + 1;
-  const day = dateObj.getUTCDate();
-  const year = dateObj.getUTCFullYear();
-  const currentDate = year + "-" + month + "-" + day;
-  return currentDate;
+  // Returns year-mm-dd
+  new Date().toISOString().slice(0, 10);
 };
+
 createPullRequest(testData);

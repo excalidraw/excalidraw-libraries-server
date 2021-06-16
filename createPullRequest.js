@@ -78,7 +78,7 @@ const createPullRequest = async ({
     });
     return response.data;
   } catch (err) {
-    console.log("error", err);
+    console.error("error", err);
   }
 };
 

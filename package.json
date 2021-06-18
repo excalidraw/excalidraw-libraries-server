@@ -23,6 +23,9 @@
     "prettier": "prettier \"**/*.{css,scss,json,md,html,yml}\" --ignore-path=.eslintignore",
     "test:code": "eslint --max-warnings=0 --ext .js,.ts,.tsx .",
     "start": "nodemon server.js",
-    "start:dev": "NODE_ENV=development nodemon server.js"
+    "start:dev": "cross-env NODE_ENV=development nodemon server.js"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
   }
 }

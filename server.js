@@ -44,22 +44,30 @@ const acceptedFields = [
   },
 ];
 
-function parseData(params) {
+async function parseData(params) {
   const { excalidrawLib: lib, excalidrawPng: png, ...rest } = params;
-  const excalidrawLib = lib[0].buffer.toString();
+  const excalidrawLib = `${lib[0].buffer.toString()}\n`;
   const excalidrawPng = png[0].buffer.toString("base64");
   const data = {
     excalidrawLib,
     excalidrawPng,
     ...rest,
   };
-  createPullRequest(data);
+  return await createPullRequest(data);
 }
 
-app.post("/libraries/publish", upload.fields(acceptedFields), (req, res) => {
-  parseData({ ...req.body, ...req.files });
-  res.send({ status: 200 });
-});
+app.post(
+  "/libraries/publish",
+  upload.fields(acceptedFields),
+  async (req, res, next) => {
+    try {
+      const data = await parseData({ ...req.body, ...req.files });
+      res.send({ status: 200, url: data.html_url });
+    } catch (error) {
+      return next(error);
+    }
+  },
+);
 
 app.listen(PORT, () => {
   console.log(`Server start at http://localhost:${PORT}`);

@@ -10,11 +10,14 @@ const app = express();
 const upload = multer();
 require("dotenv").config();
 
-console.log({ NODE_ENV: process.env.NODE_ENV });
-
 if (process.env.NODE_ENV === "development") {
   app.use("/", express.static("public"));
 } else {
+  try {
+    process.env.EXCALIBOT_TOKEN = functions.config().github.excalibot_token;
+  } catch (error) {
+    console.error(error);
+  }
   app.get("/", (req, res) => {
     res.send("Server is up!");
   });

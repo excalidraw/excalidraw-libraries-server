@@ -56,7 +56,6 @@ function parseData(params) {
   createPullRequest(data);
 }
 
-// });
 app.post("/libraries/publish", upload.fields(acceptedFields), (req, res) => {
   parseData({ ...req.body, ...req.files });
   res.send({ status: 200 });

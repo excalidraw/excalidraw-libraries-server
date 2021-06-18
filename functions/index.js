@@ -1,10 +1,16 @@
+const functions = require("firebase-functions");
 const express = require("express");
 const multer = require("multer");
+
 const createPullRequest = require("./createPullRequest");
-const app = express();
+
 const PORT = 3001;
+
+const app = express();
 const upload = multer();
 require("dotenv").config();
+
+console.log({ NODE_ENV: process.env.NODE_ENV });
 
 if (process.env.NODE_ENV === "development") {
   app.use("/", express.static("public"));
@@ -73,3 +79,5 @@ app.post(
 app.listen(PORT, () => {
   console.log(`Server start at http://localhost:${PORT}`);
 });
+
+exports.api = functions.https.onRequest(app);

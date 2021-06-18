@@ -49,12 +49,11 @@ async function parseData(params) {
   const { excalidrawLib: lib, excalidrawPng: png, ...rest } = params;
   const excalidrawLib = `${lib[0].buffer.toString()}\n`;
   const excalidrawPng = png[0].buffer.toString("base64");
-  const data = {
+  return {
     excalidrawLib,
     excalidrawPng,
     ...rest,
   };
-  return await createPullRequest(data);
 }
 
 app.post(
@@ -63,6 +62,7 @@ app.post(
   async (req, res, next) => {
     try {
       const data = await parseData({ ...req.body, ...req.files });
+      await createPullRequest(data);
       res.send({ status: 200, url: data.html_url });
     } catch (error) {
       return next(error);

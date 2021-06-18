@@ -4,6 +4,7 @@ const createPullRequest = require("./createPullRequest");
 const app = express();
 const PORT = 3001;
 const upload = multer();
+require("dotenv").config();
 
 if (process.env.NODE_ENV === "development") {
   app.use("/", express.static("public"));

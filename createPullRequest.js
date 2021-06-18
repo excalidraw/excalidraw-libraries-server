@@ -2,7 +2,6 @@ const { Octokit } = require("@octokit/core");
 const {
   createPullRequest: octokitPluginCreatePR,
 } = require("octokit-plugin-create-pull-request");
-const { testData } = require("./testData");
 
 const createPullRequest = async ({
   title,
@@ -21,7 +20,7 @@ const createPullRequest = async ({
   const owner = "excalidraw",
     repo = "excalidraw-libraries",
     body = "This pull request is a test!",
-    head = `${authorName}-libs`,
+    head = `${authorName}-${name}`,
     base = "main";
 
   const excalidrawLibPath = `libraries/${authorName}/${name}.excalidrawlib`;
@@ -87,4 +86,4 @@ const getTodayDate = () => {
   new Date().toISOString().slice(0, 10);
 };
 
-createPullRequest(testData);
+module.exports = createPullRequest;

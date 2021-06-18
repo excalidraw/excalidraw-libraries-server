@@ -2,3 +2,5 @@ node_modules
 .idea
 .env
 .DS_Store
+ui-debug.log
+firebase-debug.log

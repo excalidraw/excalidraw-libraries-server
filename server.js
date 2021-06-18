@@ -62,8 +62,8 @@ app.post(
   async (req, res, next) => {
     try {
       const data = await parseData({ ...req.body, ...req.files });
-      await createPullRequest(data);
-      res.send({ status: 200, url: data.html_url });
+      const result = await createPullRequest(data);
+      res.send({ status: 200, url: result.html_url });
     } catch (error) {
       return next(error);
     }

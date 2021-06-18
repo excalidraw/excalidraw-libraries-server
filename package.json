@@ -9,14 +9,20 @@
     "@excalidraw/eslint-config": "1.0.0",
     "@excalidraw/prettier-config": "1.0.2",
     "@octokit/core": "^3.5.1",
+    "dotenv": "^10.0.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.3.1",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.7",
     "octokit-plugin-create-pull-request": "^3.9.3",
     "prettier": "^2.3.1"
   },
   "prettier": "@excalidraw/prettier-config",
   "scripts": {
     "prettier": "prettier \"**/*.{css,scss,json,md,html,yml}\" --ignore-path=.eslintignore",
-    "test:code": "eslint --max-warnings=0 --ext .js,.ts,.tsx ."
-  }
+    "test:code": "eslint --max-warnings=0 --ext .js,.ts,.tsx .",
+    "start": "nodemon server.js"
+  },
+  "dependencies": {}
 }

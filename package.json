@@ -17,6 +17,7 @@
     "prettier": "prettier \"**/*.{css,scss,json,md,html,yml}\" --ignore-path=.eslintignore",
     "test:code": "eslint --max-warnings=0 --ext .js,.ts,.tsx .",
     "dev": "firebase emulators:start",
-    "deploy": "firebase deploy --only functions"
+    "deploy": "firebase deploy --only functions",
+    "setup": "npm i && cd functions && npm i"
   }
 }

@@ -2,22 +2,19 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "scripts": {
-    "serve": "firebase emulators:start --only functions",
-    "shell": "firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
+    "start": "firebase functions:shell",
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "10"
+    "node": "14"
   },
   "main": "index.js",
   "dependencies": {
     "@octokit/core": "^3.5.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "firebase-admin": "^8.10.0",
-    "firebase-functions": "^3.6.1",
+    "firebase-admin": "^9.8.0",
+    "firebase-functions": "^3.14.1",
     "multer": "^1.4.2",
     "octokit-plugin-create-pull-request": "^3.9.3"
   },

@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === "development") {
   app.use("/", express.static("public"));
 } else {
   try {
-    process.env.EXCALIBOT_TOKEN = functions.config().github.excalibot_token;
+    process.env.GH_TOKEN = functions.config().github.gh_token;
   } catch (error) {
     console.error(error);
   }

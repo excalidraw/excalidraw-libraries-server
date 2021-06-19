@@ -14,7 +14,7 @@ const createPullRequest = async ({
 }) => {
   const MyOctokit = Octokit.plugin(octokitPluginCreatePR);
   const octokit = new MyOctokit({
-    auth: process.env.EXCALIBOT_TOKEN,
+    auth: process.env.GH_TOKEN,
   });
 
   const owner = "excalidraw",

@@ -1,5 +1,5 @@
 {
   "projects": {
-    "default": "excalidraw-app"
+    "default": "excalidraw-room-persistence"
   }
 }

@@ -1,13 +1,10 @@
 const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
-
 require("dotenv").config();
-
 // load routes
 // -----------------------------------------------------------------------------
 const { router } = require("./router");
-
 require("./routes/libraries");
 // -----------------------------------------------------------------------------
 

@@ -10,14 +10,16 @@
     "@excalidraw/prettier-config": "1.0.2",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.3.1",
+    "firebase-tools": "9.1",
     "prettier": "^2.3.1"
   },
   "prettier": "@excalidraw/prettier-config",
   "scripts": {
     "prettier": "prettier \"**/*.{css,scss,json,md,html,yml}\" --ignore-path=.eslintignore",
     "test:code": "eslint --max-warnings=0 --ext .js,.ts,.tsx .",
-    "dev": "firebase emulators:start",
-    "deploy": "firebase deploy --only functions",
-    "setup": "yarn && cd functions && yarn"
+    "dev": "npx firebase emulators:start",
+    "deploy": "npx firebase deploy --only functions",
+    "setup": "yarn && cd functions && yarn",
+    "setup:production": "yarn --production && cd functions && yarn --production"
   }
 }

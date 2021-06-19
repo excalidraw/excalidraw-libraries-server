@@ -1,9 +1,12 @@
 import testData from "./testData.js";
 const onPublish = () => {
-  fetch("http://localhost:3001/libraries/publish  ", {
-    method: "post",
-    body: testData,
-  }).then(
+  fetch(
+    "http://localhost:6001/excalidraw-room-persistence/us-central1/api/libraries/publish",
+    {
+      method: "post",
+      body: testData,
+    },
+  ).then(
     (res) => console.log("res", res.body),
     (err) => console.error(err),
   );

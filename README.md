@@ -15,3 +15,4 @@ Automate the process of excalidraw libraries
   ```
   yarn dev
   ```
+3. open http://localhost:6001/excalidraw-room-persistence/us-central1/api/ and start coding in your favourite editpr

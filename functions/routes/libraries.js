@@ -27,8 +27,12 @@ router.post(
     ],
   }),
   async (req, res, next) => {
-    const data = await parseData(payload);
-    const result = await createPullRequest(data);
-    res.send({ status: 200, url: result.html_url });
+    try {
+      const data = await parseData(req.body);
+      const result = await createPullRequest(data);
+      res.send({ status: 200, url: result.html_url });
+    } catch (err) {
+      return next(err);
+    }
   },
 );

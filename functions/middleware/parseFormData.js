@@ -19,10 +19,6 @@ module.exports.parseFormData =
       const payload = await new Promise((resolve, reject) => {
         const data = new Map();
 
-        setTimeout(() => {
-          reject(new Error("busboy timed out"));
-        }, 2000);
-
         const filePromises = [];
 
         busboy.on("field", (fieldname, value) => {

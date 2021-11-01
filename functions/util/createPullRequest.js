@@ -30,7 +30,7 @@ const createPullRequest = async ({
     const response = await octokit.createPullRequest({
       owner,
       repo,
-      title,
+      title: commit,
       body: description,
       base,
       head,

@@ -42,6 +42,7 @@ const createPullRequest = async ({
               const url = `https://github.com/${githubHandle}`;
               const source = `${authorName}/${name}.excalidrawlib`;
               const preview = `${authorName}/${name}.png`;
+              const date = getTodayDate();
               const fileContent = {
                 name,
                 description,
@@ -53,7 +54,8 @@ const createPullRequest = async ({
                 ],
                 source,
                 preview,
-                date: getTodayDate(),
+                created: date,
+                updated: date,
               };
               const existingContent = JSON.parse(
                 Buffer.from(content, encoding).toString("utf-8"),

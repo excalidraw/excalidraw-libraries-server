@@ -19,8 +19,7 @@ const createPullRequest = async ({
 
   const owner = "excalidraw",
     repo = "excalidraw-libraries",
-    body = "This pull request is a test!",
-    head = `${authorName}-${name}`,
+    head = `${githubHandle}-${name}`,
     base = "main";
 
   const excalidrawLibPath = `libraries/${authorName}/${name}.excalidrawlib`;
@@ -31,7 +30,7 @@ const createPullRequest = async ({
       owner,
       repo,
       title,
-      body,
+      body: description,
       base,
       head,
       changes: [

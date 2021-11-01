@@ -21,10 +21,11 @@ const createPullRequest = async ({
     repo = "excalidraw-libraries",
     head = `${githubHandle}-${name}`,
     base = "main";
-
-  const excalidrawLibPath = `libraries/${authorName}/${name}.excalidrawlib`;
-  const pngPath = `libraries/${authorName}/${name}.png`;
-  const commit = `Added ${title}`;
+  const nameToKebabCase = name.replace(/\s+/g, "-").toLowerCase();
+  const filePath = `libraries/${githubHandle}/${nameToKebabCase}`;
+  const excalidrawLibPath = `${filePath}.excalidrawlib`;
+  const pngPath = `${filePath}.png`;
+  const commit = `feat: ${title}`;
   try {
     const response = await octokit.createPullRequest({
       owner,

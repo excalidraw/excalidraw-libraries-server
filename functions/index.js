@@ -12,7 +12,6 @@ const app = express();
 
 // allow cross-origin requests
 app.use(cors({ origin: true }));
-
 if (process.env.NODE_ENV === "development") {
   app.use("/", express.static("public"));
 } else {

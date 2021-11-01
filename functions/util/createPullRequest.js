@@ -17,15 +17,15 @@ const createPullRequest = async ({
     auth: process.env.GH_TOKEN,
   });
 
+  const nameToKebabCase = name.replace(/\s+/g, "-").toLowerCase();
+  const filePath = `${githubHandle}/${nameToKebabCase}`;
+  const excalidrawLibPath = `libraries/${filePath}.excalidrawlib`;
+  const pngPath = `libraries/${filePath}.png`;
+  const commit = `feat: ${title}`;
   const owner = "excalidraw",
     repo = "excalidraw-libraries",
-    head = `${githubHandle}-${name}`,
+    head = `${githubHandle}-${nameToKebabCase}`,
     base = "main";
-  const nameToKebabCase = name.replace(/\s+/g, "-").toLowerCase();
-  const filePath = `libraries/${githubHandle}/${nameToKebabCase}`;
-  const excalidrawLibPath = `${filePath}.excalidrawlib`;
-  const pngPath = `${filePath}.png`;
-  const commit = `feat: ${title}`;
   try {
     const response = await octokit.createPullRequest({
       owner,
@@ -41,8 +41,8 @@ const createPullRequest = async ({
               if (!exists) return null;
 
               const url = `https://github.com/${githubHandle}`;
-              const source = `${authorName}/${name}.excalidrawlib`;
-              const preview = `${authorName}/${name}.png`;
+              const source = `${filePath}.excalidrawlib`;
+              const preview = `${filePath}.png`;
               const date = getTodayDate();
               const fileContent = {
                 name,

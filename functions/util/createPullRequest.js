@@ -35,7 +35,7 @@ const createPullRequest = async ({
   if (githubHandle) {
     url = `https://github.com/${githubHandle}`;
   } else if (twitterHandle) {
-    url = `https://twitter.com/${githubHandle}`;
+    url = `https://twitter.com/${twitterHandle}`;
   }
   try {
     const response = await octokit.createPullRequest({

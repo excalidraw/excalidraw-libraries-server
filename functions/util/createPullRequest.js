@@ -11,6 +11,7 @@ const createPullRequest = async ({
   description,
   excalidrawLib,
   excalidrawPng,
+  twitterHandle,
 }) => {
   const MyOctokit = Octokit.plugin(octokitPluginCreatePR);
   const octokit = new MyOctokit({
@@ -18,14 +19,24 @@ const createPullRequest = async ({
   });
 
   const nameToKebabCase = name.replace(/\s+/g, "-").toLowerCase();
-  const filePath = `${githubHandle}/${nameToKebabCase}`;
+  const username =
+    githubHandle ||
+    twitterHandle ||
+    authorName.split(" ")[0].toLowerCase().trim();
+  const filePath = `${username}/${nameToKebabCase}`;
   const excalidrawLibPath = `libraries/${filePath}.excalidrawlib`;
   const pngPath = `libraries/${filePath}.png`;
   const commit = `feat: ${title}`;
   const owner = "excalidraw",
     repo = "excalidraw-libraries",
-    head = `${githubHandle}-${nameToKebabCase}`,
+    head = `${username}-${nameToKebabCase}`,
     base = "main";
+  let url = "";
+  if (githubHandle) {
+    url = `https://github.com/${githubHandle}`;
+  } else if (twitterHandle) {
+    url = `https://twitter.com/${githubHandle}`;
+  }
   try {
     const response = await octokit.createPullRequest({
       owner,
@@ -39,8 +50,6 @@ const createPullRequest = async ({
           files: {
             "libraries.json": ({ exists, encoding, content }) => {
               if (!exists) return null;
-
-              const url = `https://github.com/${githubHandle}`;
               const source = `${filePath}.excalidrawlib`;
               const preview = `${filePath}.png`;
               const date = getTodayDate();

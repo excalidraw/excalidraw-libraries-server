@@ -25,6 +25,7 @@ router.post(
       "name",
       "description",
       "twitterHandle",
+      "website",
     ],
   }),
   async (req, res, next) => {

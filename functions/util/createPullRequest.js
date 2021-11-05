@@ -12,6 +12,7 @@ const createPullRequest = async ({
   excalidrawLib,
   excalidrawPng,
   twitterHandle,
+  website,
 }) => {
   const MyOctokit = Octokit.plugin(octokitPluginCreatePR);
   const octokit = new MyOctokit({
@@ -32,7 +33,9 @@ const createPullRequest = async ({
     head = `${username}-${nameToKebabCase}`,
     base = "main";
   let url = "";
-  if (githubHandle) {
+  if (website) {
+    url = website;
+  } else if (githubHandle) {
     url = `https://github.com/${githubHandle}`;
   } else if (twitterHandle) {
     url = `https://twitter.com/${twitterHandle}`;

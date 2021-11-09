@@ -43,7 +43,7 @@ const createPullRequest = async ({
 
   const userNameInDesc = githubHandle
     ? `@${githubHandle}`
-    : "[${authorName}](${website})";
+    : `[${authorName}](${website})`;
   const updatedDesc = `${description}\n\n submitted by ${userNameInDesc}`;
   try {
     const response = await octokit.createPullRequest({

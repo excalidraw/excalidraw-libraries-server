@@ -40,12 +40,17 @@ const createPullRequest = async ({
   } else if (twitterHandle) {
     url = `https://twitter.com/${twitterHandle}`;
   }
+
+  const userNameInDesc = githubHandle
+    ? `@${githubHandle}`
+    : "[authorName](website)";
+  const updatedDesc = `${description}\n\n submitted by ${userNameInDesc}`;
   try {
     const response = await octokit.createPullRequest({
       owner,
       repo,
       title: commit,
-      body: description,
+      body: updatedDesc,
       base,
       head,
       changes: [

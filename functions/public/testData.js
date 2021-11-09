@@ -14,16 +14,17 @@ const getLib = async () => {
   );
   return libBlob;
 };
-
 const excalidrawLib = await getLib();
 const excalidrawPng = await getPng();
 const formData = new FormData();
 formData.append("excalidrawLib", excalidrawLib);
 formData.append("excalidrawPng", excalidrawPng);
 formData.append("title", "Automated excalidraw libs");
-formData.append("authorName", "excalibot");
+formData.append("authorName", "Excalibot");
 formData.append("githubHandle", "excalibot");
 formData.append("name", "automating-libs");
 formData.append("description", "Adding automated excalidraw libs");
+formData.append("twitterHandle", "");
+formData.append("website", "");
 
 export default formData;

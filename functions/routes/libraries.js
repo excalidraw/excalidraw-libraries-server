@@ -1,4 +1,4 @@
-const { router } = require("../router");
+const { router, wrapRoute } = require("../router");
 const { parseFormData } = require("../middleware/parseFormData");
 const createPullRequest = require("../util/createPullRequest");
 
@@ -28,13 +28,9 @@ router.post(
       "website",
     ],
   }),
-  async (req, res, next) => {
-    try {
-      const data = await parseData(req.body);
-      const result = await createPullRequest(data);
-      res.send({ status: 200, url: result.html_url });
-    } catch (err) {
-      return next(err);
-    }
-  },
+  wrapRoute(async (req) => {
+    const data = await parseData(req.body);
+    const result = await createPullRequest(data);
+    return { url: result.html_url };
+  }),
 );

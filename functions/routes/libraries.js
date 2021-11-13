@@ -4,7 +4,7 @@ const createPullRequest = require("../util/createPullRequest");
 
 async function parseData(params) {
   const { excalidrawLib: lib, excalidrawPng: png, ...rest } = params;
-  const excalidrawLib = `${lib.toString()}\n`;
+  const excalidrawLib = lib.toString();
   const excalidrawPng = png.toString("base64");
   return {
     excalidrawLib,

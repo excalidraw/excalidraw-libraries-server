@@ -2,6 +2,27 @@ const { Octokit } = require("@octokit/core");
 const {
   createPullRequest: octokitPluginCreatePR,
 } = require("octokit-plugin-create-pull-request");
+const { RequestError } = require("./errors");
+
+const VALID_LIBRARY_VERSIONS = [2];
+
+const normalizeLibraryData = (libraryData) => {
+  if (!VALID_LIBRARY_VERSIONS.includes(libraryData.version)) {
+    throw new RequestError({
+      message: `Invalid library version (${libraryData.version})`,
+      status: 400,
+    });
+  }
+
+  return {
+    ...libraryData,
+    libraryItems: libraryData.libraryItems.map(({ status, ...item }) => {
+      return {
+        ...item,
+      };
+    }),
+  };
+};
 
 const createPullRequest = async ({
   title,
@@ -46,6 +67,8 @@ const createPullRequest = async ({
     : `[${authorName}](${url})`;
   const updatedDesc = `${description}\n\n submitted by ${userNameInDesc}`;
   try {
+    const libraryData = normalizeLibraryData(JSON.parse(excalidrawLib));
+
     const response = await octokit.createPullRequest({
       owner,
       repo,
@@ -74,6 +97,7 @@ const createPullRequest = async ({
                 preview,
                 created: date,
                 updated: date,
+                version: libraryData.version,
               };
               const existingContent = JSON.parse(
                 Buffer.from(content, encoding).toString("utf-8"),
@@ -83,7 +107,7 @@ const createPullRequest = async ({
               return res;
             },
             [excalidrawLibPath]: {
-              content: excalidrawLib,
+              content: `${JSON.stringify(libraryData, null, 2)}\n`,
             },
             [pngPath]: {
               content: excalidrawPng,

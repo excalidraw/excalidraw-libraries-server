@@ -1,10 +1,10 @@
-const { router } = require("../router");
+const { router, wrapRoute } = require("../router");
 const { parseFormData } = require("../middleware/parseFormData");
 const createPullRequest = require("../util/createPullRequest");
 
 async function parseData(params) {
   const { excalidrawLib: lib, excalidrawPng: png, ...rest } = params;
-  const excalidrawLib = `${lib.toString()}\n`;
+  const excalidrawLib = lib.toString();
   const excalidrawPng = png.toString("base64");
   return {
     excalidrawLib,
@@ -28,13 +28,9 @@ router.post(
       "website",
     ],
   }),
-  async (req, res, next) => {
-    try {
-      const data = await parseData(req.body);
-      const result = await createPullRequest(data);
-      res.send({ status: 200, url: result.html_url });
-    } catch (err) {
-      return next(err);
-    }
-  },
+  wrapRoute(async (req) => {
+    const data = await parseData(req.body);
+    const result = await createPullRequest(data);
+    return { url: result.html_url };
+  }),
 );

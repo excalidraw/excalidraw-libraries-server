@@ -14,14 +14,14 @@ const app = express();
 app.use(cors({ origin: true }));
 
 if (process.env.NODE_ENV === "development") {
-  app.use("/", express.static("public"));
+  router.use("/", express.static("public"));
 } else {
   try {
     process.env.GH_TOKEN = functions.config().github.gh_token;
   } catch (error) {
     console.error(error);
   }
-  app.get("/", (req, res) => {
+  router.get("/", (req, res) => {
     res.send("Server is up!");
   });
 }
@@ -29,3 +29,5 @@ if (process.env.NODE_ENV === "development") {
 app.use(router);
 
 exports.api = functions.https.onRequest(app);
+
+console.log("ready");

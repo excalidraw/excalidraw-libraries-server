@@ -33,12 +33,16 @@ const createPullRequest = async ({
     head = `${username}-${nameToKebabCase}`,
     base = "main";
   let url = "";
+  const githubUrl = githubHandle ? `https://github.com/${githubHandle}` : "";
+  const twitterUrl = twitterHandle
+    ? `https://twitter.com/${twitterHandle}`
+    : "";
   if (website) {
     url = website;
   } else if (githubHandle) {
-    url = `https://github.com/${githubHandle}`;
+    url = githubUrl;
   } else if (twitterHandle) {
-    url = `https://twitter.com/${twitterHandle}`;
+    url = twitterUrl;
   }
 
   const userNameInDesc = githubHandle
@@ -67,6 +71,8 @@ const createPullRequest = async ({
                 authors: [
                   {
                     name: authorName,
+                    github: githubUrl,
+                    twitter: twitterUrl,
                     url,
                   },
                 ],

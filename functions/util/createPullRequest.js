@@ -28,8 +28,10 @@ const normalizeLibraryData = (libraryData) => {
 
 const slugify = (string, name) => {
   let slug = _.deburr(string)
-    .replace(/[^\w]+/g, "-")
     .toLowerCase()
+    // remove non-word characters, replacing with dash
+    .replace(/[^\w]+/g, "-")
+    // remove dashes from start/end
     .replace(/^[_-]+/, "")
     .replace(/[_-]+$/, "");
   if (!slug.length) {

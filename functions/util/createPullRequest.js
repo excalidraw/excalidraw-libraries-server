@@ -25,6 +25,14 @@ const normalizeLibraryData = (libraryData) => {
   };
 };
 
+const slugify = (string) => {
+  return string
+    .replace(/[^\w]+/g, "-")
+    .toLowerCase()
+    .replace(/^[_-]+/, "")
+    .replace(/[_-]+$/, "");
+};
+
 const createPullRequest = async ({
   title,
   authorName,
@@ -41,18 +49,15 @@ const createPullRequest = async ({
     auth: process.env.GH_TOKEN,
   });
 
-  const nameToKebabCase = name.replace(/\s+/g, "-").toLowerCase();
-  const username =
-    githubHandle ||
-    twitterHandle ||
-    authorName.split(" ")[0].toLowerCase().trim();
-  const filePath = `${username}/${nameToKebabCase}`;
+  const nameSlug = slugify(name);
+  const username = slugify(githubHandle || twitterHandle || authorName);
+  const filePath = `${username}/${nameSlug}`;
   const excalidrawLibPath = `libraries/${filePath}.excalidrawlib`;
   const pngPath = `libraries/${filePath}.png`;
   const commit = `feat: ${title}`;
   const owner = "excalidraw",
     repo = "excalidraw-libraries",
-    head = `${username}-${nameToKebabCase}`,
+    head = `${username}-${nameSlug}`,
     base = "main";
   let url = "";
   const githubUrl = githubHandle ? `https://github.com/${githubHandle}` : "";

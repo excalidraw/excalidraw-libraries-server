@@ -16,9 +16,10 @@ const normalizeLibraryData = (libraryData) => {
 
   return {
     ...libraryData,
-    libraryItems: libraryData.libraryItems.map(({ status, ...item }) => {
+    libraryItems: libraryData.libraryItems.map((item) => {
       return {
         ...item,
+        status: "published",
       };
     }),
   };

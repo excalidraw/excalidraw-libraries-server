@@ -28,6 +28,6 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(router);
 
-exports.api = functions.https.onRequest(app);
+exports.libraries = functions.https.onRequest(app);
 
 console.log("ready");

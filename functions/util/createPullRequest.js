@@ -25,19 +25,17 @@ const normalizeLibraryData = (libraryData) => {
   };
 };
 
-const getRandomCharacter = () => {
-  const characters = "abcdefghijklmnopqrstuvwxyz";
-  return characters[Math.floor(Math.random() * characters.length)];
-};
-
-const slugify = (string) => {
+const slugify = (string, name) => {
   let slug = string
     .replace(/[^\w]+/g, "-")
     .toLowerCase()
     .replace(/^[_-]+/, "")
     .replace(/[_-]+$/, "");
   if (!slug.length) {
-    return new Array(6).fill(null).map(getRandomCharacter).join("");
+    throw new RequestError({
+      status: 400,
+      message: `Invalid value for "${name}"`,
+    });
   }
   return slug;
 };
@@ -58,8 +56,15 @@ const createPullRequest = async ({
     auth: process.env.GH_TOKEN,
   });
 
-  const nameSlug = slugify(name);
-  const username = slugify(githubHandle || twitterHandle || authorName);
+  const nameSlug = slugify(name, "library name");
+  const username = slugify(
+    githubHandle || twitterHandle || authorName,
+    githubHandle
+      ? "github handle"
+      : twitterHandle
+      ? "twitter handle"
+      : "author name",
+  );
   const filePath = `${username}/${nameSlug}`;
   const excalidrawLibPath = `libraries/${filePath}.excalidrawlib`;
   const pngPath = `libraries/${filePath}.png`;

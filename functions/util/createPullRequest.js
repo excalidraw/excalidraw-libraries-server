@@ -3,6 +3,7 @@ const {
   createPullRequest: octokitPluginCreatePR,
 } = require("octokit-plugin-create-pull-request");
 const { RequestError } = require("./errors");
+const _ = require("lodash");
 
 const VALID_LIBRARY_VERSIONS = [2];
 
@@ -26,7 +27,7 @@ const normalizeLibraryData = (libraryData) => {
 };
 
 const slugify = (string, name) => {
-  let slug = string
+  let slug = _.deburr(string)
     .replace(/[^\w]+/g, "-")
     .toLowerCase()
     .replace(/^[_-]+/, "")

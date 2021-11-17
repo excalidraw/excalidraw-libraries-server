@@ -92,7 +92,9 @@ const createPullRequest = async ({
   const userNameInDesc = githubHandle
     ? `@${githubHandle}`
     : `[${authorName}](${url})`;
-  const updatedDesc = `${description}\n\n submitted by ${userNameInDesc}`;
+  const updatedDesc = `${description}\n\n submitted by ${userNameInDesc}\n\n
+  ![](https://raw.githubusercontent.com/excalidraw/excalidraw-libraries/${head}/libraries/${filePath}.png?raw=true)
+  `;
   try {
     const libraryData = normalizeLibraryData(JSON.parse(excalidrawLib));
 

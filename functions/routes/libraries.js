@@ -14,7 +14,7 @@ async function parseData(params) {
 }
 
 router.post(
-  "/submitLibrary",
+  "/submit",
   parseFormData({
     allowedFields: [
       "excalidrawLib",

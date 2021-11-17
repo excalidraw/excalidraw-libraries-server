@@ -3,6 +3,7 @@ const {
   createPullRequest: octokitPluginCreatePR,
 } = require("octokit-plugin-create-pull-request");
 const { RequestError } = require("./errors");
+const deburr = require("lodash.deburr");
 
 const VALID_LIBRARY_VERSIONS = [2];
 
@@ -25,6 +26,23 @@ const normalizeLibraryData = (libraryData) => {
   };
 };
 
+const slugify = (string, name) => {
+  let slug = deburr(string)
+    .toLowerCase()
+    // remove non-word characters, replacing with dash
+    .replace(/[^\w]+/g, "-")
+    // remove dashes from start/end
+    .replace(/^[_-]+/, "")
+    .replace(/[_-]+$/, "");
+  if (!slug.length) {
+    throw new RequestError({
+      status: 400,
+      message: `Invalid value for "${name}"`,
+    });
+  }
+  return slug;
+};
+
 const createPullRequest = async ({
   title,
   authorName,
@@ -41,18 +59,22 @@ const createPullRequest = async ({
     auth: process.env.GH_TOKEN,
   });
 
-  const nameToKebabCase = name.replace(/\s+/g, "-").toLowerCase();
-  const username =
-    githubHandle ||
-    twitterHandle ||
-    authorName.split(" ")[0].toLowerCase().trim();
-  const filePath = `${username}/${nameToKebabCase}`;
+  const nameSlug = slugify(name, "library name");
+  const username = slugify(
+    githubHandle || twitterHandle || authorName,
+    githubHandle
+      ? "github handle"
+      : twitterHandle
+      ? "twitter handle"
+      : "author name",
+  );
+  const filePath = `${username}/${nameSlug}`;
   const excalidrawLibPath = `libraries/${filePath}.excalidrawlib`;
   const pngPath = `libraries/${filePath}.png`;
   const commit = `feat: ${title}`;
   const owner = "excalidraw",
     repo = "excalidraw-libraries",
-    head = `${username}-${nameToKebabCase}`,
+    head = `${username}-${nameSlug}`,
     base = "main";
   let url = "";
   const githubUrl = githubHandle ? `https://github.com/${githubHandle}` : "";

@@ -3,7 +3,7 @@ const {
   createPullRequest: octokitPluginCreatePR,
 } = require("octokit-plugin-create-pull-request");
 const { RequestError } = require("./errors");
-const _ = require("lodash");
+const deburr = require("lodash.deburr");
 
 const VALID_LIBRARY_VERSIONS = [2];
 
@@ -27,7 +27,7 @@ const normalizeLibraryData = (libraryData) => {
 };
 
 const slugify = (string, name) => {
-  let slug = _.deburr(string)
+  let slug = deburr(string)
     .toLowerCase()
     // remove non-word characters, replacing with dash
     .replace(/[^\w]+/g, "-")

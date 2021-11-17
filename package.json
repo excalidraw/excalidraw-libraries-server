@@ -18,7 +18,7 @@
     "prettier": "prettier \"**/*.{css,scss,json,md,html,yml}\" --ignore-path=.eslintignore",
     "test:code": "eslint --max-warnings=0 --ext .js,.ts,.tsx .",
     "dev": "npx firebase emulators:start",
-    "deploy": "npx firebase deploy --only functions",
+    "deploy": "npx firebase deploy --only functions:libraries",
     "setup": "yarn && cd functions && yarn",
     "setup:production": "yarn --production && cd functions && yarn --production"
   }

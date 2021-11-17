@@ -25,12 +25,21 @@ const normalizeLibraryData = (libraryData) => {
   };
 };
 
+const getRandomCharacter = () => {
+  const characters = "abcdefghijklmnopqrstuvwxyz";
+  return characters[Math.floor(Math.random() * characters.length)];
+};
+
 const slugify = (string) => {
-  return string
+  let slug = string
     .replace(/[^\w]+/g, "-")
     .toLowerCase()
     .replace(/^[_-]+/, "")
     .replace(/[_-]+$/, "");
+  if (!slug.length) {
+    return new Array(6).fill(null).map(getRandomCharacter).join("");
+  }
+  return slug;
 };
 
 const createPullRequest = async ({

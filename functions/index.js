@@ -1,7 +1,16 @@
 const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+const { statSync } = require("fs");
+const path = require("path");
+
+if (process.env.NODE_ENV === "development") {
+  const localEnvPath = path.resolve(__dirname, "../.env.local");
+  if (statSync(localEnvPath)) {
+    require("dotenv").config({ path: localEnvPath });
+  }
+}
+
 // load routes
 // -----------------------------------------------------------------------------
 const { router } = require("./router");

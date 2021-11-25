@@ -54,6 +54,10 @@ const createPullRequest = async ({
   twitterHandle,
   website,
 }) => {
+  if (!process.env.GH_TOKEN) {
+    throw new Error("Missing auth (process.env.GH_TOKEN not defined)");
+  }
+
   const MyOctokit = Octokit.plugin(octokitPluginCreatePR);
   const octokit = new MyOctokit({
     auth: process.env.GH_TOKEN,
@@ -72,10 +76,10 @@ const createPullRequest = async ({
   const excalidrawLibPath = `libraries/${filePath}.excalidrawlib`;
   const pngPath = `libraries/${filePath}.png`;
   const commit = `feat: new library ${title}`;
-  const owner = "excalidraw",
-    repo = "excalidraw-libraries",
-    head = `${username}-${nameSlug}`,
-    base = "main";
+  const owner = process.env.GH_OWNER || "excalidraw";
+  const repo = "excalidraw-libraries";
+  const head = `${username}-${nameSlug}`;
+  const base = "main";
   let url = "";
   const githubUrl = githubHandle ? `https://github.com/${githubHandle}` : "";
   const twitterUrl = twitterHandle
@@ -96,7 +100,7 @@ const createPullRequest = async ({
     : authorName;
 
   const updatedDesc = `${description}\n\n submitted by ${userNameInDesc}\n\n
-  ![](https://raw.githubusercontent.com/excalidraw/excalidraw-libraries/${head}/libraries/${filePath}.png?raw=true)
+  ![](https://raw.githubusercontent.com/${owner}/excalidraw-libraries/${head}/libraries/${filePath}.png?raw=true)
   `;
   try {
     const libraryData = normalizeLibraryData(JSON.parse(excalidrawLib));

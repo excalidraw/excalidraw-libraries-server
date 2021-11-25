@@ -6,16 +6,16 @@ Automate the process of excalidraw libraries
 
 1. Install dependencies:
 
-  ```
-  yarn setup
-  ```
+    ```
+    yarn setup
+    ```
 
 2. Start Firebase emulator:
 
-  ```
-  yarn dev
-  ```
-3. open http://localhost:6001/excalidraw-room-persistence/us-central1/api/ and start coding in your favourite editpr
+    ```
+    yarn dev
+    ```
+3. open http://localhost:6001/excalidraw-room-persistence/us-central1/libraries/ and start coding in your favourite editpr
 
 # Local publishing
 
@@ -27,14 +27,14 @@ In order to not spam the public library repository when developing new publishin
 
 3. Create a `.env.local` file in the root of this project with the following content:
 
-    ```
+    ```env
     GH_TOKEN=<your_github_token>
     GH_OWNER=<your_github_username>
     ```
 
 4. Create a `.env.local` file in the root of your [Excalidraw](https://github.com/excalidraw/excalidraw) project:
 
-    ```
+    ```env
     REACT_APP_LIBRARY_BACKEND=http://localhost:6001/excalidraw-room-persistence/us-central1/libraries
     ```
 

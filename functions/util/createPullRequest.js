@@ -4,6 +4,8 @@ const {
 } = require("octokit-plugin-create-pull-request");
 const { RequestError } = require("./errors");
 const deburr = require("lodash.deburr");
+const { template } = require("./template");
+const path = require("path");
 
 const VALID_LIBRARY_VERSIONS = [2];
 
@@ -99,17 +101,34 @@ const createPullRequest = async ({
     ? `[${authorName}](${url})`
     : authorName;
 
-  const updatedDesc = `${description}\n\n submitted by ${userNameInDesc}\n\n
-  ![](https://raw.githubusercontent.com/${owner}/excalidraw-libraries/${head}/libraries/${filePath}.png?raw=true)
-  `;
-  try {
-    const libraryData = normalizeLibraryData(JSON.parse(excalidrawLib));
+  const libraryData = normalizeLibraryData(JSON.parse(excalidrawLib));
 
+  const itemNames = libraryData.libraryItems.map((item) => {
+    if (!item.name) {
+      throw new RequestError({
+        status: 400,
+        message: `A library item is missing a name`,
+      });
+    }
+    return item.name;
+  });
+
+  const pullRequestDescription = await template(
+    path.resolve(__dirname, "./templates/publishLibraryDescription.md"),
+    {
+      description,
+      userNameInDesc,
+      itemNames: itemNames.join(", "),
+      imagePreviewURL: `https://raw.githubusercontent.com/${owner}/excalidraw-libraries/${head}/libraries/${filePath}.png?raw=true`,
+    },
+  );
+
+  try {
     const response = await octokit.createPullRequest({
       owner,
       repo,
       title: commit,
-      body: updatedDesc,
+      body: pullRequestDescription,
       base,
       head,
       changes: [
@@ -157,9 +176,15 @@ const createPullRequest = async ({
       ],
     });
     return response.data;
-  } catch (err) {
-    console.error("error", err);
-    throw err;
+  } catch (error) {
+    console.error("error", error);
+    if (error.status === 422) {
+      throw new RequestError({
+        status: 422,
+        message: "Library with this name already exists under your account.",
+      });
+    }
+    throw error;
   }
 };
 

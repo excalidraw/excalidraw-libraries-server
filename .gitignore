@@ -1,6 +1,7 @@
 node_modules
 .idea
 .env
+.env.local
 .DS_Store
 ui-debug.log
 firebase-debug.log

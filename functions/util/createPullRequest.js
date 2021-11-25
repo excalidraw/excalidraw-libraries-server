@@ -113,13 +113,18 @@ const createPullRequest = async ({
     return item.name;
   });
 
+  const RAW_BASE = `https://raw.githubusercontent.com/${owner}/excalidraw-libraries/${head}/libraries`;
+
   const pullRequestDescription = await template(
     path.resolve(__dirname, "./templates/publishLibraryDescription.md"),
     {
       description,
       userNameInDesc,
       itemNames: itemNames.join(", "),
-      imagePreviewURL: `https://raw.githubusercontent.com/${owner}/excalidraw-libraries/${head}/libraries/${filePath}.png?raw=true`,
+      imagePreviewURL: `${RAW_BASE}/${filePath}.png?raw=true`,
+      installURL: `https://excalidraw.com/?addLibrary=${encodeURIComponent(
+        `${RAW_BASE}/${filePath}.excalidrawlib?raw=true`,
+      )}`,
     },
   );
 

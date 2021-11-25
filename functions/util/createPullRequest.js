@@ -157,9 +157,15 @@ const createPullRequest = async ({
       ],
     });
     return response.data;
-  } catch (err) {
-    console.error("error", err);
-    throw err;
+  } catch (error) {
+    console.error("error", error);
+    if (error.status === 422) {
+      throw new RequestError({
+        status: 422,
+        message: "Library with this name already exists under your account.",
+      });
+    }
+    throw error;
   }
 };
 

@@ -3,12 +3,17 @@ const { parseFormData } = require("../middleware/parseFormData");
 const createPullRequest = require("../util/createPullRequest");
 
 async function parseData(params) {
-  const { excalidrawLib: lib, excalidrawPng: png, ...rest } = params;
-  const excalidrawLib = lib.toString();
-  const excalidrawPng = png.toString("base64");
+  const {
+    excalidrawLib: lib,
+    excalidrawPng, // legacy
+    previewImage,
+    previewImageType,
+    ...rest
+  } = params;
   return {
-    excalidrawLib,
-    excalidrawPng,
+    excalidrawLib: lib.toString(),
+    previewImage: (previewImage || previewImage).toString("base64"),
+    previewImageType: previewImageType || "image/png",
     ...rest,
   };
 }
@@ -18,7 +23,9 @@ router.post(
   parseFormData({
     allowedFields: [
       "excalidrawLib",
-      "excalidrawPng",
+      "excalidrawPng", // leagcy
+      "previewImage",
+      "previewImageType",
       "title",
       "authorName",
       "githubHandle",

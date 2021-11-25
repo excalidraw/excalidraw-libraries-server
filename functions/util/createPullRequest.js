@@ -45,6 +45,17 @@ const slugify = (string, name) => {
   return slug;
 };
 
+const mimeTypeToExtension = (mimeType) => {
+  if (mimeType === "image/png") {
+    return "png";
+  } else if (mimeType === "image/jpeg") {
+    return "jpg";
+  } else if (mimeType === "image/svg+xml") {
+    return "svg";
+  }
+  return null;
+};
+
 const createPullRequest = async ({
   title,
   authorName,
@@ -52,7 +63,8 @@ const createPullRequest = async ({
   name,
   description,
   excalidrawLib,
-  excalidrawPng,
+  previewImage,
+  previewImageType,
   twitterHandle,
   website,
 }) => {
@@ -76,7 +88,8 @@ const createPullRequest = async ({
   );
   const filePath = `${username}/${nameSlug}`;
   const excalidrawLibPath = `libraries/${filePath}.excalidrawlib`;
-  const pngPath = `libraries/${filePath}.png`;
+  const previewImageExt = mimeTypeToExtension(previewImageType) || "png";
+  const previewImagePath = `libraries/${filePath}.${previewImageExt}`;
   const commit = `feat: new library ${title}`;
   const owner = process.env.GH_OWNER || "excalidraw";
   const repo = "excalidraw-libraries";
@@ -121,7 +134,7 @@ const createPullRequest = async ({
       description,
       userNameInDesc,
       itemNames: itemNames.join(", "),
-      imagePreviewURL: `${RAW_BASE}/${filePath}.png?raw=true`,
+      imagePreviewURL: `${RAW_BASE}/${filePath}.${previewImageExt}?raw=true`,
       installURL: `https://excalidraw.com/?addLibrary=${encodeURIComponent(
         `${RAW_BASE}/${filePath}.excalidrawlib?raw=true`,
       )}`,
@@ -142,7 +155,7 @@ const createPullRequest = async ({
             "libraries.json": ({ exists, encoding, content }) => {
               if (!exists) return null;
               const source = `${filePath}.excalidrawlib`;
-              const preview = `${filePath}.png`;
+              const preview = `${filePath}.${previewImageExt}`;
               const date = getTodayDate();
               const fileContent = {
                 name,
@@ -171,8 +184,8 @@ const createPullRequest = async ({
             [excalidrawLibPath]: {
               content: `${JSON.stringify(libraryData, null, 2)}\n`,
             },
-            [pngPath]: {
-              content: excalidrawPng,
+            [previewImagePath]: {
+              content: previewImage,
               encoding: "base64",
             },
           },

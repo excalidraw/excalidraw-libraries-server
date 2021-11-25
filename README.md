@@ -27,15 +27,15 @@ In order to not spam the public library repository when developing new publishin
 
 3. Create a `.env.local` file in the root of this project with the following content:
 
-  ```
-  GH_TOKEN=<your_github_token>
-  GH_OWNER=<your_github_username>
-  ```
+    ```
+    GH_TOKEN=<your_github_token>
+    GH_OWNER=<your_github_username>
+    ```
 
 4. Create a `.env.local` file in the root of your [Excalidraw](https://github.com/excalidraw/excalidraw) project:
 
-  ```
-  REACT_APP_LIBRARY_BACKEND=http://localhost:6001/excalidraw-room-persistence/us-central1/libraries
-  ```
+    ```
+    REACT_APP_LIBRARY_BACKEND=http://localhost:6001/excalidraw-room-persistence/us-central1/libraries
+    ```
 
 That's it. When publishing a library from a local dev Excalidraw instance, it'll send the request to your local excalidraw-automation server, which will then create a pull request in your library repository fork.

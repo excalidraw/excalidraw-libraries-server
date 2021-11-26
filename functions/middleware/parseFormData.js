@@ -49,7 +49,7 @@ module.exports.parseFormData =
           await Promise.all(filePromises);
 
           const missingFields = allowedFields.filter(
-            (field) => !data.has(field),
+            (field) => !data.has(field) && field !== "excalidrawPng",
           );
           if (missingFields.length) {
             return reject(

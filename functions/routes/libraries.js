@@ -23,7 +23,7 @@ router.post(
   parseFormData({
     allowedFields: [
       "excalidrawLib",
-      "excalidrawPng", // leagcy
+      "excalidrawPng", // legacy
       "previewImage",
       "previewImageType",
       "title",

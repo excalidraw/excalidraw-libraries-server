@@ -12,7 +12,7 @@ async function parseData(params) {
   } = params;
   return {
     excalidrawLib: lib.toString(),
-    previewImage: (previewImage || previewImage).toString("base64"),
+    previewImage: (previewImage || excalidrawPng).toString("base64"),
     previewImageType: previewImageType || "image/png",
     ...rest,
   };

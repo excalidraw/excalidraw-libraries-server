@@ -155,7 +155,6 @@ const createPullRequest = async ({
             "libraries.json": ({ exists, encoding, content }) => {
               if (!exists) return null;
               const source = `${filePath}.excalidrawlib`;
-              const preview = `${filePath}.${previewImageExt}`;
               const date = getTodayDate();
               const fileContent = {
                 name,
@@ -169,17 +168,30 @@ const createPullRequest = async ({
                   },
                 ],
                 source,
-                preview,
+                preview: `${filePath}.${previewImageExt}`,
                 created: date,
                 updated: date,
                 version: libraryData.version,
               };
-              const existingContent = JSON.parse(
+
+              let librariesList = JSON.parse(
                 Buffer.from(content, encoding).toString("utf-8"),
               );
-              existingContent.push(fileContent);
-              const res = `${JSON.stringify(existingContent, null, 2)}\n`;
-              return res;
+
+              let isReplacing = false;
+              librariesList = librariesList.map((item) => {
+                if (item.name === name && item.source === source) {
+                  isReplacing = true;
+                  return { ...item, ...fileContent, created: item.created };
+                }
+                return item;
+              });
+
+              if (!isReplacing) {
+                librariesList.push(fileContent);
+              }
+
+              return `${JSON.stringify(librariesList, null, 2)}\n`;
             },
             [excalidrawLibPath]: {
               content: `${JSON.stringify(libraryData, null, 2)}\n`,

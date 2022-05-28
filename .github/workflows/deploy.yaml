@@ -18,13 +18,13 @@ jobs:
       - name: Install Dependencies
         run: yarn setup
       - name: Init Firebase Functions config
-        uses: w9jds/firebase-action@master
+        uses: docker://w9jds/firebase-action:master
         with:
           args: functions:config:set github.gh_token="${{ secrets.GH_TOKEN }}"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
+        uses: docker://w9jds/firebase-action:master
         with:
           args: deploy --only functions:libraries
         env:

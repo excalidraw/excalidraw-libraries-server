@@ -172,6 +172,7 @@ const createPullRequest = async ({
                 created: date,
                 updated: date,
                 version: libraryData.version,
+                itemNames,
               };
 
               let librariesList = JSON.parse(
